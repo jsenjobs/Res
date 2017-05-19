@@ -1,8 +1,8 @@
 [
     {"name":"二维码","pic":"https://raw.githubusercontent.com/jsenjobs/Res/master/cityman/icon/ta_qrcode.png"},
-    {"name":"OC","pic":"creme_brelee.jpg"},
-    {"name":"java","pic":"creme_brelee.jpg"},
-    {"name":"Swift","pic":"creme_brelee.jpg"},
+    {"name":"书签","pic":"https://raw.githubusercontent.com/jsenjobs/Res/master/cityman/icon/bookmark.png"},
+    {"name":"拍照","pic":"https://raw.githubusercontent.com/jsenjobs/Res/master/cityman/icon/camera.png"},
+    {"name":"笔记","pic":"https://raw.githubusercontent.com/jsenjobs/Res/master/cityman/icon/note.png"},
     {"name":"php","pic":"creme_brelee.jpg"},
     {"name":"php","pic":"creme_brelee.jpg"},
     {"name":"Swift","pic":"creme_brelee.jpg"},
