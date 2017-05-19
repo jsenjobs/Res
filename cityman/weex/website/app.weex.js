@@ -112,14 +112,11 @@
 	module.exports = {
 	  "group": {
 	    "flexDirection": "row",
-	    "justifyContent": "space-around",
-	    "marginTop": 20
+	    "justifyContent": "space-around"
 	  },
 	  "input": {
 	    "width": 750,
 	    "fontSize": 36,
-	    "paddingTop": 15,
-	    "paddingBottom": 15,
 	    "borderWidth": 2,
 	    "borderStyle": "solid",
 	    "borderColor": "#BBBBBB"
@@ -128,9 +125,6 @@
 	    "width": 225,
 	    "textAlign": "center",
 	    "backgroundColor": "#D3D3D3",
-	    "paddingTop": 15,
-	    "paddingBottom": 15,
-	    "marginBottom": 30,
 	    "fontSize": 30
 	  },
 	  "webview": {
