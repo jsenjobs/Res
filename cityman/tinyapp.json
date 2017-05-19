@@ -1,10 +1,10 @@
 [
-    {"name":"二维码","pic":"https://raw.githubusercontent.com/jsenjobs/Res/master/cityman/icon/ta_qrcode.png"},
-    {"name":"书签","pic":"https://raw.githubusercontent.com/jsenjobs/Res/master/cityman/icon/bookmark.png"},
-    {"name":"拍照","pic":"https://raw.githubusercontent.com/jsenjobs/Res/master/cityman/icon/camera.png"},
-    {"name":"笔记","pic":"https://raw.githubusercontent.com/jsenjobs/Res/master/cityman/icon/note.png"},
-    {"name":"聊天","pic":"https://raw.githubusercontent.com/jsenjobs/Res/master/cityman/icon/chat.png"},
-    {"name":"新闻","pic":"https://raw.githubusercontent.com/jsenjobs/Res/master/cityman/icon/news.png"},
-    {"name":"任务","pic":"https://raw.githubusercontent.com/jsenjobs/Res/master/cityman/icon/task.png"},
-    {"name":"白鲸","pic":"https://raw.githubusercontent.com/jsenjobs/Res/master/cityman/icon/whale.png"}
+    {"name":"二维码","pic":"https://raw.githubusercontent.com/jsenjobs/Res/master/cityman/icon/ta_qrcode.png","url":"ttps://raw.githubusercontent.com/jsenjobs/Res/master/cityman/weex/app.weex.js"},
+    {"name":"书签","pic":"https://raw.githubusercontent.com/jsenjobs/Res/master/cityman/icon/bookmark.png","url":"ttps://raw.githubusercontent.com/jsenjobs/Res/master/cityman/weex/app.weex.js"},
+    {"name":"拍照","pic":"https://raw.githubusercontent.com/jsenjobs/Res/master/cityman/icon/camera.png","url":"ttps://raw.githubusercontent.com/jsenjobs/Res/master/cityman/weex/app.weex.js"},
+    {"name":"笔记","pic":"https://raw.githubusercontent.com/jsenjobs/Res/master/cityman/icon/note.png","url":"ttps://raw.githubusercontent.com/jsenjobs/Res/master/cityman/weex/app.weex.js"},
+    {"name":"聊天","pic":"https://raw.githubusercontent.com/jsenjobs/Res/master/cityman/icon/chat.png","url":"ttps://raw.githubusercontent.com/jsenjobs/Res/master/cityman/weex/app.weex.js"},
+    {"name":"新闻","pic":"https://raw.githubusercontent.com/jsenjobs/Res/master/cityman/icon/news.png","url":"ttps://raw.githubusercontent.com/jsenjobs/Res/master/cityman/weex/app.weex.js"},
+    {"name":"任务","pic":"https://raw.githubusercontent.com/jsenjobs/Res/master/cityman/icon/task.png","url":"ttps://raw.githubusercontent.com/jsenjobs/Res/master/cityman/weex/app.weex.js"},
+    {"name":"白鲸","pic":"https://raw.githubusercontent.com/jsenjobs/Res/master/cityman/icon/whale.png","url":"ttps://raw.githubusercontent.com/jsenjobs/Res/master/cityman/weex/app.weex.js"}
 ]
