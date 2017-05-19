@@ -157,7 +157,7 @@
 	  data: {
 	    logoUrl: 'file:///loading.gif',
 	    target: 'World',
-	    page: [{ "name": "Jsen", "icon": "cityman", "selectedIcon": "citymand", "url": cUrl + "tinypageA.weex.js", "navbarTitle": "TinyAppA", "showNavbar": "show", "navbarColor": "#ffff00" }, { "name": "Jobs", "icon": "tinyfunction", "selectedIcon": "tinyfunctiond", "url": cUrl + "tinypageB.weex.js", "navbarTitle": "TinyAppB", "showNavbar": "show", "navbarColor": "#ff0000" }]
+	    page: [{ "name": "Jsen", "icon": "cityman", "selectedIcon": "citymand", "url": cUrl + "tinypageA.weex.js", "navbarTitle": "TinyAppA", "showNavbar": "show", "navbarColor": "#0000ff" }, { "name": "Jobs", "icon": "tinyfunction", "selectedIcon": "tinyfunctiond", "url": cUrl + "tinypageB.weex.js", "navbarTitle": "TinyAppB", "showNavbar": "show", "navbarColor": "#ff0000" }]
 	  },
 	  computed: {
 	    pageStr: function pageStr() {
