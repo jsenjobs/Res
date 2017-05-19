@@ -1,10 +1,10 @@
 [
-    {"name":"Aron","pic":"creme_brelee.jpg","url":"http://www.baidu.com"},
-    {"name":"Semon","pic":"creme_brelee.jpg","url":"http://www.baidu.com"},
-    {"name":"Jucy","pic":"creme_brelee.jpg","url":"http://www.baidu.com"},
-    {"name":"Jsen","pic":"creme_brelee.jpg","url":"http://www.baidu.com"},
-    {"name":"echo","pic":"creme_brelee.jpg","url":"http://www.baidu.com"},
-    {"name":"Mike","pic":"creme_brelee.jpg","url":"http://www.baidu.com"},
-    {"name":"John","pic":"creme_brelee.jpg","url":"http://www.baidu.com"},
-    {"name":"Semth","pic":"creme_brelee.jpg","url":"http://www.baidu.com"}
+    {"name":"Aron","pic":"creme_brelee.jpg","url":"http://www.baidu.com","desc":"Aron介绍"},
+    {"name":"Semon","pic":"creme_brelee.jpg","url":"http://www.baidu.com","desc":"Semon介绍"},
+    {"name":"Jucy","pic":"creme_brelee.jpg","url":"http://www.baidu.com","desc":"Jucy介绍"},
+    {"name":"Jsen","pic":"creme_brelee.jpg","url":"http://www.baidu.com","desc":"Jsen介绍"},
+    {"name":"echo","pic":"creme_brelee.jpg","url":"http://www.baidu.com","desc":"Echo介绍"},
+    {"name":"Mike","pic":"creme_brelee.jpg","url":"http://www.baidu.com","desc":"Mike介绍"},
+    {"name":"John","pic":"creme_brelee.jpg","url":"http://www.baidu.com","desc":"John介绍"},
+    {"name":"Semth","pic":"creme_brelee.jpg","url":"http://www.baidu.com","desc":"Semth介绍"}
 ]
