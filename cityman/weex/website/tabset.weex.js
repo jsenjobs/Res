@@ -52,39 +52,35 @@
 	  value: true
 	});
 
-	var _tabset = __webpack_require__(9);
+	var _tabmain = __webpack_require__(5);
 
-	var _tabset2 = _interopRequireDefault(_tabset);
+	var _tabmain2 = _interopRequireDefault(_tabmain);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	_tabset2.default.el = '#tabset';
-	exports.default = new Vue(_tabset2.default);
+	_tabmain2.default.el = '#tabmain';
+	exports.default = new Vue(_tabmain2.default);
 
 /***/ }),
 /* 1 */,
 /* 2 */,
 /* 3 */,
 /* 4 */,
-/* 5 */,
-/* 6 */,
-/* 7 */,
-/* 8 */,
-/* 9 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var __vue_exports__, __vue_options__
 	var __vue_styles__ = []
 
 	/* styles */
-	__vue_styles__.push(__webpack_require__(10)
+	__vue_styles__.push(__webpack_require__(6)
 	)
 
 	/* script */
-	__vue_exports__ = __webpack_require__(11)
+	__vue_exports__ = __webpack_require__(7)
 
 	/* template */
-	var __vue_template__ = __webpack_require__(12)
+	var __vue_template__ = __webpack_require__(8)
 	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
 	if (
 	  typeof __vue_exports__.default === "object" ||
@@ -96,10 +92,10 @@
 	if (typeof __vue_options__ === "function") {
 	  __vue_options__ = __vue_options__.options
 	}
-	__vue_options__.__file = "/Users/jsen/Documents/Projects/Weex/tiny/WebBrowser/src/tabset.vue"
+	__vue_options__.__file = "/Users/jsen/Documents/Projects/Weex/tiny/WebBrowser/src/tabmain.vue"
 	__vue_options__.render = __vue_template__.render
 	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-	__vue_options__._scopeId = "data-v-f5f9a02e"
+	__vue_options__._scopeId = "data-v-6dbaa07c"
 	__vue_options__.style = __vue_options__.style || {}
 	__vue_styles__.forEach(function (module) {
 	  for (var name in module) {
@@ -114,7 +110,7 @@
 
 
 /***/ }),
-/* 10 */
+/* 6 */
 /***/ (function(module, exports) {
 
 	module.exports = {
@@ -131,6 +127,7 @@
 	  },
 	  "button": {
 	    "width": 225,
+	    "flex": 1,
 	    "textAlign": "center",
 	    "backgroundColor": "#D3D3D3",
 	    "fontSize": 30
@@ -146,7 +143,7 @@
 	}
 
 /***/ }),
-/* 11 */
+/* 7 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -182,35 +179,30 @@
 	      var _this = this;
 
 	      this.url = this.value;
-	      modal.toast({ message: 'load url:' + this.url });
+	      // modal.toast({ message: 'load url:' + this.url })
 	      setTimeout(function () {
-	        console.log('will go back.');
-	        modal.toast({ message: 'will go back' });
+	        // modal.toast({ message: 'will go back' })
 	        webview.goBack(_this.$refs.webview);
 	      }, 10000);
 	    },
 	    reload: function reload(event) {
-	      console.log('will reload webview');
-	      modal.toast({ message: 'reload' });
+	      // modal.toast({ message: 'reload' })
 	      webview.reload(this.$refs.webview);
 	    },
 	    start: function start(event) {
-	      console.log('pagestart', event);
-	      modal.toast({ message: 'pagestart' });
+	      // modal.toast({ message: 'pagestart' })
 	    },
 	    finish: function finish(event) {
-	      console.log('pagefinish', event);
-	      modal.toast({ message: 'pagefinish' });
+	      // modal.toast({ message: 'pagefinish' })
 	    },
 	    error: function error(event) {
-	      console.log('error', event);
-	      modal.toast({ message: 'error' });
+	      // modal.toast({ message: 'error' })
 	    }
 	  }
 	};
 
 /***/ }),
-/* 12 */
+/* 8 */
 /***/ (function(module, exports) {
 
 	module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
