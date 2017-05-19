@@ -3,8 +3,8 @@
     {"name":"书签","pic":"https://raw.githubusercontent.com/jsenjobs/Res/master/cityman/icon/bookmark.png"},
     {"name":"拍照","pic":"https://raw.githubusercontent.com/jsenjobs/Res/master/cityman/icon/camera.png"},
     {"name":"笔记","pic":"https://raw.githubusercontent.com/jsenjobs/Res/master/cityman/icon/note.png"},
-    {"name":"php","pic":"creme_brelee.jpg"},
-    {"name":"php","pic":"creme_brelee.jpg"},
-    {"name":"Swift","pic":"creme_brelee.jpg"},
-    {"name":"php","pic":"creme_brelee.jpg"}
+    {"name":"聊天","pic":"https://raw.githubusercontent.com/jsenjobs/Res/master/cityman/icon/chat.png"},
+    {"name":"新闻","pic":"https://raw.githubusercontent.com/jsenjobs/Res/master/cityman/icon/news.png"},
+    {"name":"任务","pic":"https://raw.githubusercontent.com/jsenjobs/Res/master/cityman/icon/task.png"},
+    {"name":"白鲸","pic":"https://raw.githubusercontent.com/jsenjobs/Res/master/cityman/icon/whale.png"}
 ]
