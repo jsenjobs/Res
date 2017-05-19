@@ -127,6 +127,7 @@
 	  },
 	  "button": {
 	    "width": 225,
+	    "flex": 1,
 	    "textAlign": "center",
 	    "backgroundColor": "#D3D3D3",
 	    "fontSize": 30
@@ -178,29 +179,24 @@
 	      var _this = this;
 
 	      this.url = this.value;
-	      modal.toast({ message: 'load url:' + this.url });
+	      // modal.toast({ message: 'load url:' + this.url })
 	      setTimeout(function () {
-	        console.log('will go back.');
-	        modal.toast({ message: 'will go back' });
+	        // modal.toast({ message: 'will go back' })
 	        webview.goBack(_this.$refs.webview);
 	      }, 10000);
 	    },
 	    reload: function reload(event) {
-	      console.log('will reload webview');
-	      modal.toast({ message: 'reload' });
+	      // modal.toast({ message: 'reload' })
 	      webview.reload(this.$refs.webview);
 	    },
 	    start: function start(event) {
-	      console.log('pagestart', event);
-	      modal.toast({ message: 'pagestart' });
+	      // modal.toast({ message: 'pagestart' })
 	    },
 	    finish: function finish(event) {
-	      console.log('pagefinish', event);
-	      modal.toast({ message: 'pagefinish' });
+	      // modal.toast({ message: 'pagefinish' })
 	    },
 	    error: function error(event) {
-	      console.log('error', event);
-	      modal.toast({ message: 'error' });
+	      // modal.toast({ message: 'error' })
 	    }
 	  }
 	};
