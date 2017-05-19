@@ -8,5 +8,5 @@
     {"name":"任务","pic":"https://raw.githubusercontent.com/jsenjobs/Res/master/cityman/icon/task.png","url":"https://raw.githubusercontent.com/jsenjobs/Res/master/cityman/weex/app.weex.js"},
     {"name":"白鲸","pic":"https://raw.githubusercontent.com/jsenjobs/Res/master/cityman/icon/whale.png","url":"https://raw.githubusercontent.com/jsenjobs/Res/master/cityman/weex/app.weex.js"},
     {"name":"浏览器","pic":"https://raw.githubusercontent.com/jsenjobs/Res/master/cityman/icon/website.png","url":"https://raw.githubusercontent.com/jsenjobs/Res/master/cityman/weex/website/app.weex.js"},
-    {"name":"音乐","pic":"https://raw.githubusercontent.com/jsenjobs/Res/master/cityman/icon/music.png","url":"https://raw.githubusercontent.com/jsenjobs/Res/master/cityman/weex/music/app.weex.js"}
+    {"name":"音乐","pic":"http://192.168.1.100:8080/dist/app.weex.js"}
 ]
