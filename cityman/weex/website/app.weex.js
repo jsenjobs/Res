@@ -116,7 +116,7 @@
 	    "marginTop": 20
 	  },
 	  "input": {
-	    "width": 600,
+	    "width": 750,
 	    "fontSize": 36,
 	    "paddingTop": 15,
 	    "paddingBottom": 15,
@@ -134,9 +134,9 @@
 	    "fontSize": 30
 	  },
 	  "webview": {
-	    "marginLeft": 75,
-	    "width": 600,
-	    "height": 750,
+	    "marginLeft": 0,
+	    "width": 750,
+	    "flex": 1,
 	    "borderWidth": 2,
 	    "borderStyle": "solid",
 	    "borderColor": "#41B883"
