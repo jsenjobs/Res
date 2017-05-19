@@ -157,7 +157,7 @@
 	  data: {
 	    logoUrl: 'file:///loading.gif',
 	    target: 'World',
-	    page: [{ "name": "主页", "icon": "cityman", "selectedIcon": "citymand", "url": cUrl + "/tabmain.weex.js", "navbarTitle": "浏览", "showNavbar": "show", "navbarColor": "#ffff00" }, { "name": "设置", "icon": "tinyfunction", "selectedIcon": "tinyfunctiond", "url": cUrl + "/tabset.weex.js", "navbarTitle": "设置", "showNavbar": "show", "navbarColor": "#ff0000" }]
+	    page: [{ "name": "主页", "icon": "cityman", "selectedIcon": "citymand", "url": cUrl + "/tabmain.weex.js", "navbarTitle": "浏览", "showNavbar": "show", "navbarColor": "#00ffff" }, { "name": "设置", "icon": "tinyfunction", "selectedIcon": "tinyfunctiond", "url": cUrl + "/tabset.weex.js", "navbarTitle": "设置", "showNavbar": "show", "navbarColor": "#ff0000" }]
 	  },
 	  computed: {
 	    pageStr: function pageStr() {
