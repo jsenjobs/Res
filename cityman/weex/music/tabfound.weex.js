@@ -114,31 +114,18 @@
 /***/ (function(module, exports) {
 
 	module.exports = {
-	  "group": {
-	    "flexDirection": "row",
-	    "justifyContent": "space-around"
-	  },
 	  "input": {
-	    "width": 750,
-	    "fontSize": 36,
+	    "flex": 1,
+	    "padding": 20,
+	    "fontSize": 50,
+	    "height": 90,
+	    "margin": 50,
 	    "borderWidth": 2,
 	    "borderStyle": "solid",
-	    "borderColor": "#BBBBBB"
-	  },
-	  "button": {
-	    "width": 225,
-	    "flex": 1,
-	    "textAlign": "center",
-	    "backgroundColor": "#D3D3D3",
-	    "fontSize": 30
-	  },
-	  "webview": {
-	    "marginLeft": 0,
-	    "width": 750,
-	    "flex": 1,
-	    "borderWidth": 2,
-	    "borderStyle": "solid",
-	    "borderColor": "#41B883"
+	    "borderColor": "#41B883",
+	    "color": "#666666",
+	    "placeholderColor": "#999999",
+	    "borderRadius": 6
 	  }
 	}
 
@@ -158,11 +145,6 @@
 	//
 	//
 	//
-	//
-	//
-	//
-	//
-	//
 
 	var webview = weex.requireModule('webview');
 	var modal = weex.requireModule('modal');
@@ -170,35 +152,11 @@
 	  data: function data() {
 	    return {
 	      url: 'https://www.baidu.com',
-	      value: 'https://www.baidu.com'
+	      value: ''
 	    };
 	  },
 
-	  methods: {
-	    loadURL: function loadURL(event) {
-	      var _this = this;
-
-	      this.url = this.value;
-	      // modal.toast({ message: 'load url:' + this.url })
-	      setTimeout(function () {
-	        // modal.toast({ message: 'will go back' })
-	        webview.goBack(_this.$refs.webview);
-	      }, 10000);
-	    },
-	    reload: function reload(event) {
-	      // modal.toast({ message: 'reload' })
-	      webview.reload(this.$refs.webview);
-	    },
-	    start: function start(event) {
-	      // modal.toast({ message: 'pagestart' })
-	    },
-	    finish: function finish(event) {
-	      // modal.toast({ message: 'pagefinish' })
-	    },
-	    error: function error(event) {
-	      // modal.toast({ message: 'error' })
-	    }
-	  }
+	  methods: {}
 	};
 
 /***/ }),
@@ -216,6 +174,7 @@
 	    attrs: {
 	      "type": "url",
 	      "autofocus": "false",
+	      "placeholder": "发现好音乐",
 	      "value": (_vm.value)
 	    },
 	    on: {
@@ -223,30 +182,7 @@
 	        _vm.value = $event.target.attr.value
 	      }
 	    }
-	  })]), _c('div', {
-	    staticClass: ["group"]
-	  }, [_c('text', {
-	    staticClass: ["button"],
-	    on: {
-	      "click": _vm.loadURL
-	    }
-	  }, [_vm._v("LoadURL")]), _c('text', {
-	    staticClass: ["button"],
-	    on: {
-	      "click": _vm.reload
-	    }
-	  }, [_vm._v("reload")])]), _c('web', {
-	    ref: "webview",
-	    staticClass: ["webview"],
-	    attrs: {
-	      "src": _vm.url
-	    },
-	    on: {
-	      "pagestart": _vm.start,
-	      "pagefinish": _vm.finish,
-	      "error": _vm.error
-	    }
-	  })], 1)
+	  })])])
 	},staticRenderFns: []}
 	module.exports.render._withStripped = true
 
