@@ -84,7 +84,7 @@
 	__vue_exports__ = __webpack_require__(11)
 
 	/* template */
-	var __vue_template__ = __webpack_require__(12)
+	var __vue_template__ = __webpack_require__(13)
 	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
 	if (
 	  typeof __vue_exports__.default === "object" ||
@@ -118,37 +118,31 @@
 /***/ (function(module, exports) {
 
 	module.exports = {
-	  "group": {
-	    "flexDirection": "row",
-	    "justifyContent": "space-around"
+	  "wrapper": {
+	    "backgroundColor": "#f55e53"
 	  },
-	  "input": {
+	  "video": {
 	    "width": 750,
-	    "fontSize": 36,
-	    "borderWidth": 2,
-	    "borderStyle": "solid",
-	    "borderColor": "#BBBBBB"
+	    "height": 80
 	  },
-	  "button": {
-	    "width": 225,
-	    "flex": 1,
-	    "textAlign": "center",
-	    "backgroundColor": "#D3D3D3",
-	    "fontSize": 30
+	  "contain": {
+	    "width": 256,
+	    "height": 256
 	  },
-	  "webview": {
-	    "marginLeft": 0,
-	    "width": 750,
-	    "flex": 1,
-	    "borderWidth": 2,
-	    "borderStyle": "solid",
-	    "borderColor": "#41B883"
+	  "function": {
+	    "width": 64,
+	    "height": 64
+	  },
+	  "tip": {
+	    "color": "#ffffff",
+	    "marginTop": 30,
+	    "fontSize": 36
 	  }
 	}
 
 /***/ }),
 /* 11 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -167,40 +161,124 @@
 	//
 	//
 	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
 
-	var webview = weex.requireModule('webview');
 	var modal = weex.requireModule('modal');
+	var musicService = __webpack_require__(12);
+
 	exports.default = {
 	  data: function data() {
 	    return {
-	      url: 'https://www.baidu.com',
-	      value: 'https://www.baidu.com'
+	      currentIndex: 0,
+	      currentPage: 1,
+	      capacity: 30,
+	      currentUrl: "",
+	      musicList: [],
+	      musicName: ""
 	    };
 	  },
 
 	  methods: {
-	    loadURL: function loadURL(event) {
+	    play: function play() {
+	      var self = this;
+	      self.currentIndex = 0;
+	      self.currentPage = 1;
+	      this.loadPage();
+	    },
+	    loadPage: function loadPage() {
 	      var _this = this;
 
-	      this.url = this.value;
-	      // modal.toast({ message: 'load url:' + this.url })
-	      setTimeout(function () {
-	        // modal.toast({ message: 'will go back' })
-	        webview.goBack(_this.$refs.webview);
-	      }, 10000);
+	      var self = this;
+	      musicService.fetchMusicList("摇滚", self.currentPage, self.capacity, function (data) {
+	        self.musicList = data;
+	        if (self.musicList.length > 0) {
+	          self.loadMusic(self.musicList[self.currentIndex]);
+	        } else {
+	          currentIndex = 0;
+	          currentPage = 1;
+	          setTimeout(function () {
+	            _this.loadPage();
+	          }, 6000);
+	        }
+	      });
 	    },
-	    reload: function reload(event) {
-	      // modal.toast({ message: 'reload' })
-	      webview.reload(this.$refs.webview);
+	    loadMusic: function loadMusic(musicInfo) {
+	      var self = this;
+	      musicService.getMusicInfo(musicInfo, function (json) {
+	        if (json.code == 0) {
+	          self.currentUrl = json.data.play_url;
+	          self.musicName = json.data.song_name ? json.data.song_name : json.data.audio_name ? json.data.audio_name : "未知";
+	          modal.toast({ message: self.musicName });
+	        } else {
+	          self.currentIndex = 0;
+	          self.currentPage = 1;
+	          setTimeout(function () {
+	            self.loadPage();
+	          }, 6000);
+	        }
+	      });
 	    },
-	    start: function start(event) {
-	      // modal.toast({ message: 'pagestart' })
+	    onstart: function onstart(event) {},
+	    onpause: function onpause(event) {},
+	    onfinish: function onfinish(event) {
+	      this.nextMusic();
 	    },
-	    finish: function finish(event) {
-	      // modal.toast({ message: 'pagefinish' })
+	    onfail: function onfail(event) {},
+
+	    lastMusic: function lastMusic() {
+	      this.currentIndex--;
+	      if (this.currentIndex < 0) {
+	        this.currentIndex = 0;
+	        this.currentPage--;
+	        if (this.currentPage < 1) this.currentPage = 1;
+	        this.loadPage();
+	      } else {
+	        this.loadMusic(this.musicList[this.currentIndex]);
+	      }
 	    },
-	    error: function error(event) {
-	      // modal.toast({ message: 'error' })
+	    nextMusic: function nextMusic() {
+	      this.currentIndex++;
+	      if (this.currentIndex >= this.musicList.length) {
+	        this.currentIndex = 0;
+	        this.currentPage++;
+	        this.loadPage();
+	      } else {
+	        this.loadMusic(this.musicList[this.currentIndex]);
+	      }
 	    }
 	  }
 	};
@@ -209,49 +287,196 @@
 /* 12 */
 /***/ (function(module, exports) {
 
+	'use strict';
+
+	var stream = weex.requireModule('stream');
+	var modal = weex.requireModule('modal');
+	var wxpre = weex.requireModule('wxpre');
+
+	var listApi = "http://songsearch.kugou.com/song_search_v2";
+	var listApiParams = "platform=WebFilter";
+
+	var musicInfoApi = "http://www.kugou.com/yy/index.php?r=play/getdata&hash=42243F9FC148147063E9F0C85F733A5D&album_id=978066";
+
+	var buildPath = function buildPath(key, page, capacity) {
+	  return listApi + "?keyword=" + key + "&page=" + page + "&pagesize=" + capacity + listApiParams;
+	};
+	module.exports = {
+	  fetchMusicList: function fetchMusicList(key, page, capacity, callback) {
+	    wxpre.restGetJson(buildPath(key, page, capacity), function (data) {
+	      var json = JSON.parse(data);
+
+	      if (json && json.error_code == 0) {
+	        callback(json.data.lists);
+	      } else {
+	        callback([]);
+	      }
+	    });
+	  },
+	  getMusicInfo: function getMusicInfo(musicInfo, callback) {
+	    stream.fetch({
+	      method: 'GET',
+	      type: 'text',
+	      url: musicInfoApi + "&hash=" + musicInfo.FileHash + "&album_id=" + musicInfo.AlbumID
+	    }, function (res) {
+	      if (res.ok) {
+	        var json = JSON.parse(res.data);
+	        if (json && json.err_code == 0) {
+	          callback({ code: 0, data: json.data });
+	        } else {
+	          callback({ code: 1 });
+	        }
+	      } else {
+	        callback({ code: 1 });
+	      }
+	    });
+	  }
+	};
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports) {
+
 	module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
 	  return _c('div', {
 	    staticClass: ["wrapper"]
-	  }, [_c('div', {
-	    staticClass: ["group"]
-	  }, [_c('input', {
-	    ref: "input",
-	    staticClass: ["input"],
+	  }, [_c('video', {
+	    staticClass: ["video"],
 	    attrs: {
-	      "type": "url",
-	      "autofocus": "false",
-	      "value": (_vm.value)
+	      "src": _vm.currentUrl,
+	      "autoplay": "",
+	      "controls": ""
 	    },
 	    on: {
-	      "input": function($event) {
-	        _vm.value = $event.target.attr.value
-	      }
+	      "start": _vm.onstart,
+	      "pause": _vm.onpause,
+	      "finish": _vm.onfinish,
+	      "fail": _vm.onfail
+	    }
+	  }), _c('div', {
+	    staticStyle: {
+	      flex: "1"
+	    }
+	  }), _c('div', {
+	    staticStyle: {
+	      flexDirection: "row"
+	    }
+	  }, [_c('div', {
+	    staticStyle: {
+	      flex: "1"
+	    }
+	  }, [_c('div', {
+	    staticStyle: {
+	      flex: "1"
+	    }
+	  }), _c('div', {
+	    staticStyle: {
+	      flexDirection: "row"
+	    }
+	  }, [_c('div', {
+	    staticStyle: {
+	      flex: "1"
+	    }
+	  }), _c('image', {
+	    staticClass: ["function"],
+	    attrs: {
+	      "src": "https://raw.githubusercontent.com/jsenjobs/Res/master/cityman/icon/last.png"
+	    },
+	    on: {
+	      "click": _vm.lastMusic
+	    }
+	  }), _c('div', {
+	    staticStyle: {
+	      flex: "1"
 	    }
 	  })]), _c('div', {
-	    staticClass: ["group"]
-	  }, [_c('text', {
-	    staticClass: ["button"],
-	    on: {
-	      "click": _vm.loadURL
+	    staticStyle: {
+	      flex: "1"
 	    }
-	  }, [_vm._v("LoadURL")]), _c('text', {
-	    staticClass: ["button"],
-	    on: {
-	      "click": _vm.reload
-	    }
-	  }, [_vm._v("reload")])]), _c('web', {
-	    ref: "webview",
-	    staticClass: ["webview"],
+	  })]), _c('image', {
+	    staticClass: ["contain"],
 	    attrs: {
-	      "src": _vm.url
+	      "src": "https://raw.githubusercontent.com/jsenjobs/Res/master/cityman/icon/play.png"
 	    },
 	    on: {
-	      "pagestart": _vm.start,
-	      "pagefinish": _vm.finish,
-	      "error": _vm.error
+	      "click": _vm.play
 	    }
-	  })], 1)
-	},staticRenderFns: []}
+	  }), _c('div', {
+	    staticStyle: {
+	      flex: "1"
+	    }
+	  }, [_c('div', {
+	    staticStyle: {
+	      flex: "1"
+	    }
+	  }), _c('div', {
+	    staticStyle: {
+	      flexDirection: "row"
+	    }
+	  }, [_c('div', {
+	    staticStyle: {
+	      flex: "1"
+	    }
+	  }), _c('image', {
+	    staticClass: ["function"],
+	    attrs: {
+	      "src": "https://raw.githubusercontent.com/jsenjobs/Res/master/cityman/icon/next.png"
+	    },
+	    on: {
+	      "click": _vm.nextMusic
+	    }
+	  }), _c('div', {
+	    staticStyle: {
+	      flex: "1"
+	    }
+	  })]), _c('div', {
+	    staticStyle: {
+	      flex: "1"
+	    }
+	  })])]), _c('div', {
+	    staticStyle: {
+	      flex: "1"
+	    }
+	  }, [_c('div', {
+	    staticStyle: {
+	      flex: "1"
+	    }
+	  }), _c('div', {
+	    staticStyle: {
+	      flexDirection: "row"
+	    }
+	  }, [_c('div', {
+	    staticStyle: {
+	      flex: "1"
+	    }
+	  }), _c('text', {
+	    staticClass: ["tip"]
+	  }, [_vm._v(_vm._s(_vm.musicName))]), _c('div', {
+	    staticStyle: {
+	      flex: "1"
+	    }
+	  })]), _vm._m(0), _c('div', {
+	    staticStyle: {
+	      flex: "2"
+	    }
+	  })])], 1)
+	},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+	  return _c('div', {
+	    staticStyle: {
+	      flexDirection: "row"
+	    }
+	  }, [_c('div', {
+	    staticStyle: {
+	      flex: "1"
+	    }
+	  }), _c('text', {
+	    staticClass: ["tip"]
+	  }, [_vm._v("随心放")]), _c('div', {
+	    staticStyle: {
+	      flex: "1"
+	    }
+	  })])
+	}]}
 	module.exports.render._withStripped = true
 
 /***/ })
