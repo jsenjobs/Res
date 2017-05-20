@@ -137,6 +137,25 @@
 	    "color": "#ffffff",
 	    "marginTop": 30,
 	    "fontSize": 36
+	  },
+	  "progress": {
+	    "width": 650,
+	    "marginLeft": 50,
+	    "height": 4,
+	    "backgroundColor": "#ff4e43",
+	    "marginBottom": 6
+	  },
+	  "progress_a": {
+	    "position": "absolute",
+	    "height": 4,
+	    "backgroundColor": "#aaaaaa",
+	    "borderRadius": 2
+	  },
+	  "progress_b": {
+	    "position": "absolute",
+	    "height": 4,
+	    "backgroundColor": "#ff6e63",
+	    "borderRadius": 2
 	  }
 	}
 
@@ -196,9 +215,16 @@
 	//
 	//
 	//
+	//
+	//
+	//
+	//
+	//
+	//
 
 	var modal = weex.requireModule('modal');
 	var musicService = __webpack_require__(12);
+	var wxpre = weex.requireModule('wxpre');
 
 	exports.default = {
 	  data: function data() {
@@ -208,7 +234,12 @@
 	      capacity: 30,
 	      currentUrl: "",
 	      musicList: [],
-	      musicName: ""
+	      musicName: "",
+
+	      dprogress: 0.0,
+	      dwnprogress: 0.0,
+
+	      timer: -1
 	    };
 	  },
 
@@ -225,7 +256,9 @@
 	      var self = this;
 	      musicService.fetchMusicList("摇滚", self.currentPage, self.capacity, function (data) {
 	        self.musicList = data;
+
 	        if (self.musicList.length > 0) {
+
 	          self.loadMusic(self.musicList[self.currentIndex]);
 	        } else {
 	          currentIndex = 0;
@@ -240,9 +273,13 @@
 	      var self = this;
 	      musicService.getMusicInfo(musicInfo, function (json) {
 	        if (json.code == 0) {
-	          self.currentUrl = json.data.play_url;
+	          // self.currentUrl = json.data.play_url;
+	          var eventUrl = "music://play.url?url=" + json.data.play_url;
+
+	          wxpre.execEvent(eventUrl, function (result) {
+	            modal.toast({ message: JSON.stringify(result) });
+	          });
 	          self.musicName = json.data.song_name ? json.data.song_name : json.data.audio_name ? json.data.audio_name : "未知";
-	          modal.toast({ message: self.musicName });
 	        } else {
 	          self.currentIndex = 0;
 	          self.currentPage = 1;
@@ -252,13 +289,6 @@
 	        }
 	      });
 	    },
-	    onstart: function onstart(event) {},
-	    onpause: function onpause(event) {},
-	    onfinish: function onfinish(event) {
-	      this.nextMusic();
-	    },
-	    onfail: function onfail(event) {},
-
 	    lastMusic: function lastMusic() {
 	      this.currentIndex--;
 	      if (this.currentIndex < 0) {
@@ -280,6 +310,26 @@
 	        this.loadMusic(this.musicList[this.currentIndex]);
 	      }
 	    }
+	  },
+	  mounted: function mounted() {
+
+	    var self = this;
+	    self.timer = setInterval(function () {
+	      self.dprogress += 1;
+	      wxpre.execEvent("music://progress", function (result) {
+	        self.dprogress = result.progress * 650.0;
+	        if (result.progress >= 1) {
+	          self.nextMusic();
+	        }
+	      });
+
+	      wxpre.execEvent("music://download.progress", function (result) {
+	        self.dwnprogress = result.progress * 650.0;
+	      });
+	    }, 400);
+	  },
+	  destroyed: function destroyed() {
+	    clearInterval(self.timer);
 	  }
 	};
 
@@ -294,7 +344,7 @@
 	var wxpre = weex.requireModule('wxpre');
 
 	var listApi = "http://songsearch.kugou.com/song_search_v2";
-	var listApiParams = "platform=WebFilter";
+	var listApiParams = "&platform=WebFilter";
 
 	var musicInfoApi = "http://www.kugou.com/yy/index.php?r=play/getdata&hash=42243F9FC148147063E9F0C85F733A5D&album_id=978066";
 
@@ -340,20 +390,7 @@
 	module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
 	  return _c('div', {
 	    staticClass: ["wrapper"]
-	  }, [_c('video', {
-	    staticClass: ["video"],
-	    attrs: {
-	      "src": _vm.currentUrl,
-	      "autoplay": "",
-	      "controls": ""
-	    },
-	    on: {
-	      "start": _vm.onstart,
-	      "pause": _vm.onpause,
-	      "finish": _vm.onfinish,
-	      "fail": _vm.onfail
-	    }
-	  }), _c('div', {
+	  }, [_c('div', {
 	    staticStyle: {
 	      flex: "1"
 	    }
@@ -459,7 +496,19 @@
 	    staticStyle: {
 	      flex: "2"
 	    }
-	  })])], 1)
+	  }), _c('div', {
+	    staticClass: ["progress"]
+	  }, [_c('div', {
+	    staticClass: ["progress_a"],
+	    style: {
+	      width: _vm.dwnprogress + 'px'
+	    }
+	  }), _c('div', {
+	    staticClass: ["progress_b"],
+	    style: {
+	      width: _vm.dprogress + 'px'
+	    }
+	  })])])])
 	},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
 	  return _c('div', {
 	    staticStyle: {
