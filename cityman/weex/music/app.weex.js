@@ -127,7 +127,7 @@
 /* 3 */
 /***/ (function(module, exports) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -149,15 +149,17 @@
 	//
 
 	var navigator = weex.requireModule('navigator');
+	var wxpre = weex.requireModule('wxpre');
 	var urlReomte = "http://120.25.217.56/wx/";
-	var urlLocal = "http://192.168.1.100:3200/dist/";
+	var urlLocal = "http://192.168.1.100:8080/dist/";
 	var gitUrl = "https://raw.githubusercontent.com/jsenjobs/Res/master/cityman/weex/music";
 	var cUrl = gitUrl;
+	var modal = weex.requireModule('modal');
 	exports.default = {
 	  data: {
 	    logoUrl: 'file:///loading.gif',
 	    target: 'World',
-	    page: [{ "name": "音乐", "icon": "cityman", "selectedIcon": "citymand", "url": cUrl + "/tabmusic.weex.js", "navbarTitle": "浏览", "showNavbar": "show", "navbarColor": "#00ffff" }, { "name": "发现", "icon": "tinyfunction", "selectedIcon": "tinyfunctiond", "url": cUrl + "/tabfound.weex.js", "navbarTitle": "设置", "showNavbar": "show", "navbarColor": "#ff0000" }, { "name": "设置", "icon": "tinyfunction", "selectedIcon": "tinyfunctiond", "url": cUrl + "/tabset.weex.js", "navbarTitle": "设置", "showNavbar": "show", "navbarColor": "#ff0000" }]
+	    page: [{ "name": "音乐", "icon": "cityman", "selectedIcon": "citymand", "url": cUrl + "/tabmusic.weex.js", "navbarTitle": "音乐", "showNavbar": "show", "navbarColor": "#f55e53", "hiddenNavLine": "true" }, { "name": "发现", "icon": "comments", "selectedIcon": "commentsd", "url": cUrl + "/tabfound.weex.js", "navbarTitle": "发现", "showNavbar": "show", "navbarColor": "#f55e53", "hiddenNavLine": "false" }, { "name": "设置", "icon": "tinyfunction", "selectedIcon": "tinyfunctiond", "url": cUrl + "/tabset.weex.js", "navbarTitle": "设置", "showNavbar": "show", "navbarColor": "#f55e53", "hiddenNavLine": "false" }]
 	  },
 	  computed: {
 	    pageStr: function pageStr() {
@@ -171,6 +173,10 @@
 	    }
 	  },
 	  mounted: function mounted() {
+	    var data = { "tabBarBackgroundColor": "#ff6e63", "tabBarTintColor": "#ffffff", "unselectedItemTintColor": "#f55e53", "hiddenTopLine": "false" };
+	    wxpre.initTabBar(JSON.stringify(data), function (result) {
+	      // modal.toast({ message: result.result })
+	    });
 	    // navigator.setNavBarHidden({'hidden':true,'animated':false});
 	    // navigator.setNavBarTitle({'title':'TinyApp'})
 	    // navigator.setNavBarBackgroundColor({'backgroundColor':'#ffff00'})
