@@ -159,7 +159,7 @@
 	  data: {
 	    logoUrl: 'file:///loading.gif',
 	    target: 'World',
-	    page: [{ "name": "音乐", "icon": "cityman", "selectedIcon": "citymand", "url": cUrl + "/tabmusic.weex.js", "navbarTitle": "音乐", "showNavbar": "show", "navbarColor": "#f55e53", "hiddenNavLine": "true" }, { "name": "发现", "icon": "comments", "selectedIcon": "commentsd", "url": cUrl + "/tabfound.weex.js", "navbarTitle": "发现", "showNavbar": "show", "navbarColor": "#f55e53", "hiddenNavLine": "false" }, { "name": "设置", "icon": "tinyfunction", "selectedIcon": "tinyfunctiond", "url": cUrl + "/tabset.weex.js", "navbarTitle": "设置", "showNavbar": "show", "navbarColor": "#f55e53", "hiddenNavLine": "false" }]
+	    page: [{ "name": "音乐", "icon": "cityman", "selectedIcon": "citymand", "url": cUrl + "/tabmusic.weex.js", "navbarTitle": "发现", "showNavbar": "show", "navbarColor": "#f55e53", "hiddenNavLine": "true" }, { "name": "发现", "icon": "comments", "selectedIcon": "commentsd", "url": cUrl + "/tabfound.weex.js", "navbarTitle": "发现", "showNavbar": "show", "navbarColor": "#f55e53", "hiddenNavLine": "false" }, { "name": "设置", "icon": "tinyfunction", "selectedIcon": "tinyfunctiond", "url": cUrl + "/tabset.weex.js", "navbarTitle": "设置", "showNavbar": "show", "navbarColor": "#f55e53", "hiddenNavLine": "false" }]
 	  },
 	  computed: {
 	    pageStr: function pageStr() {
