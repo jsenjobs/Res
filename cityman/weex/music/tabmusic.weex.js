@@ -84,7 +84,7 @@
 	__vue_exports__ = __webpack_require__(11)
 
 	/* template */
-	var __vue_template__ = __webpack_require__(13)
+	var __vue_template__ = __webpack_require__(14)
 	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
 	if (
 	  typeof __vue_exports__.default === "object" ||
@@ -154,8 +154,14 @@
 	  "progress_b": {
 	    "position": "absolute",
 	    "height": 4,
-	    "backgroundColor": "#ff6e63",
+	    "backgroundColor": "#ff4e43",
 	    "borderRadius": 2
+	  },
+	  "song": {
+	    "color": "#ffffff"
+	  },
+	  "timer": {
+	    "color": "#ffffff"
 	  }
 	}
 
@@ -221,9 +227,19 @@
 	//
 	//
 	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
 
 	var modal = weex.requireModule('modal');
+	var globalEvent = weex.requireModule('globalEvent');
+
 	var musicService = __webpack_require__(12);
+	var MusicLyrics = __webpack_require__(13);
 	var wxpre = weex.requireModule('wxpre');
 
 	exports.default = {
@@ -238,15 +254,16 @@
 
 	      dprogress: 0.0,
 	      dwnprogress: 0.0,
+	      timeStr: "00:00/00:00",
+	      latestSong: ""
 
-	      timer: -1
 	    };
 	  },
 
 	  methods: {
 	    play: function play() {
 	      var self = this;
-	      self.currentIndex = 0;
+	      self.currentIndex = 1;
 	      self.currentPage = 1;
 	      this.loadPage();
 	    },
@@ -261,8 +278,8 @@
 
 	          self.loadMusic(self.musicList[self.currentIndex]);
 	        } else {
-	          currentIndex = 0;
-	          currentPage = 1;
+	          self.currentIndex = 0;
+	          self.currentPage = 1;
 	          setTimeout(function () {
 	            _this.loadPage();
 	          }, 6000);
@@ -271,15 +288,17 @@
 	    },
 	    loadMusic: function loadMusic(musicInfo) {
 	      var self = this;
+	      self.latestSong = "";
 	      musicService.getMusicInfo(musicInfo, function (json) {
 	        if (json.code == 0) {
 	          // self.currentUrl = json.data.play_url;
 	          var eventUrl = "music://play.url?url=" + json.data.play_url;
 
 	          wxpre.execEvent(eventUrl, function (result) {
-	            modal.toast({ message: JSON.stringify(result) });
+	            // modal.toast({message:JSON.stringify(result)});
 	          });
 	          self.musicName = json.data.song_name ? json.data.song_name : json.data.audio_name ? json.data.audio_name : "未知";
+	          MusicLyrics.setLyrics(json.data.lyrics);
 	        } else {
 	          self.currentIndex = 0;
 	          self.currentPage = 1;
@@ -312,24 +331,44 @@
 	    }
 	  },
 	  mounted: function mounted() {
-
+	    // 获取音乐权限
+	    wxpre.execEvent("authority://request.music", function (result) {
+	      // modal.toast({message:JSON.stringify(result)});
+	    });
 	    var self = this;
-	    self.timer = setInterval(function () {
-	      self.dprogress += 1;
-	      wxpre.execEvent("music://progress", function (result) {
-	        self.dprogress = result.progress * 650.0;
-	        if (result.progress >= 1) {
-	          self.nextMusic();
-	        }
-	      });
-
-	      wxpre.execEvent("music://download.progress", function (result) {
-	        self.dwnprogress = result.progress * 650.0;
-	      });
-	    }, 400);
+	    self.dprogress = 0;
+	    self.dwnprogress = 0;
+	    globalEvent.addEventListener("update", function (json) {
+	      self.dprogress = json.progress * 650.0;
+	      self.dwnprogress = json.downloadProgress * 650.0;
+	      self.timeStr = json.timeStr;
+	      if (json.progress > 0) {
+	        self.latestSong = MusicLyrics.getLyrics(json.timeStr);
+	      }
+	    });
+	    globalEvent.addEventListener("playStop", function (json) {
+	      //do work or refresh 
+	      self.nextMusic();
+	    });
+	    globalEvent.addEventListener("play", function (json) {
+	      //do work or refresh 
+	      self.play();
+	    });
+	    globalEvent.addEventListener("previous", function (json) {
+	      //do work or refresh 
+	      self.lastMusic();
+	    });
+	    globalEvent.addEventListener("next", function (json) {
+	      //do work or refresh 
+	      self.nextMusic();
+	    });
 	  },
-	  destroyed: function destroyed() {
-	    clearInterval(self.timer);
+	  beforeDestroy: function beforeDestroy() {
+	    globalEvent.removeEventListener('update');
+	    globalEvent.removeEventListener('playStop');
+	    globalEvent.removeEventListener('play');
+	    globalEvent.removeEventListener('previous');
+	    globalEvent.removeEventListener('next');
 	  }
 	};
 
@@ -387,6 +426,28 @@
 /* 13 */
 /***/ (function(module, exports) {
 
+	"use strict";
+
+	var lyrics = [];
+	var latest = "";
+	module.exports = {
+		setLyrics: function setLyrics(lstr) {
+			lyrics = lstr.split("\r\n");
+		},
+		getLyrics: function getLyrics(timeStr) {
+			if (lyrics.length > 0 && lyrics[0].indexOf("[" + timeStr.substring(0, 5)) == 0) {
+				latest = lyrics.shift();
+				latest = latest.substring(latest.indexOf("]") + 1, latest.length);
+			}
+			return latest;
+		}
+
+	};
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports) {
+
 	module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
 	  return _c('div', {
 	    staticClass: ["wrapper"]
@@ -394,7 +455,15 @@
 	    staticStyle: {
 	      flex: "1"
 	    }
-	  }), _c('div', {
+	  }, [_c('text', {
+	    staticClass: ["song"],
+	    staticStyle: {
+	      textAlign: "center"
+	    },
+	    attrs: {
+	      "value": _vm.latestSong
+	    }
+	  })]), _c('div', {
 	    staticStyle: {
 	      flexDirection: "row"
 	    }
@@ -497,6 +566,20 @@
 	      flex: "2"
 	    }
 	  }), _c('div', {
+	    staticStyle: {
+	      flexDirection: "row",
+	      marginRight: "60px"
+	    }
+	  }, [_c('div', {
+	    staticStyle: {
+	      flex: "1"
+	    }
+	  }), _c('text', {
+	    staticClass: ["timer"],
+	    attrs: {
+	      "value": _vm.timeStr
+	    }
+	  })]), _c('div', {
 	    staticClass: ["progress"]
 	  }, [_c('div', {
 	    staticClass: ["progress_a"],
