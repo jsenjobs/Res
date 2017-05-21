@@ -288,7 +288,7 @@
 	    },
 	    loadMusic: function loadMusic(musicInfo) {
 	      var self = this;
-	      self.latestSong = "";
+	      MusicLyrics.reset();
 	      musicService.getMusicInfo(musicInfo, function (json) {
 	        if (json.code == 0) {
 	          // self.currentUrl = json.data.play_url;
@@ -433,6 +433,9 @@
 	module.exports = {
 		setLyrics: function setLyrics(lstr) {
 			lyrics = lstr.split("\r\n");
+		},
+		reset: function reset() {
+			latest = "";
 		},
 		getLyrics: function getLyrics(timeStr) {
 			if (lyrics.length > 0 && lyrics[0].indexOf("[" + timeStr.substring(0, 5)) == 0) {
